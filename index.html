@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nychothesis · Nicholas Kristianus</title>
+<meta name="description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern, dibedah lewat evolusi, psikologi, filsafat, sama sejarah.">
+<meta property="og:title" content="Nychothesis · Nicholas Kristianus">
+<meta property="og:description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nychothesis.com/">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #121110;
+    --bg-soft:   #1a1817;
+    --card:      #1d1b19;
+    --card-2:    #211f1c;
+    --line:      #2c2925;
+    --gold:      #C9A227;
+    --gold-soft: #e0c37e;
+    --maroon:    #B0413C;
+    --text:      #F4EFE4;
+    --muted:     #8f8a80;
+    --muted-2:   #6d685f;
+    --radius:    14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    background: radial-gradient(1100px 620px at 78% -12%, #1c1a17 0%, var(--bg) 58%);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap   { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+  section { padding: 52px 0; }
+  a { color: inherit; }
+
+  /* ---------- Kepala halaman ---------- */
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 20px 0 4px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; letter-spacing: .5px; text-decoration: none;
+    font-size: .98rem;
+  }
+  /* Logonya rumit, di bawah ~30px anyamannya jadi gumpalan. */
+  .brand .cube { width: 30px; height: 30px; flex: none; }
+
+  /* Ikon sosial dipakai dua kali: di atas dan di penutup. */
+  .socials { display: flex; gap: 8px; }
+  .socials a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 9px;
+    border: 1px solid var(--line); background: rgba(255,255,255,.02);
+    color: var(--muted); transition: color .18s, border-color .18s;
+  }
+  .socials a:hover { color: var(--gold-soft); border-color: rgba(201,162,39,.4); }
+  .socials svg { width: 17px; height: 17px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 40px 0 34px; }
+  .hero-in {
+    display: grid; grid-template-columns: 1.12fr .88fr;
+    gap: 30px; align-items: center;
+  }
+  .kicker {
+    display: inline-block; font-size: .68rem; font-weight: 700;
+    letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold);
+    border: 1px solid rgba(201, 162, 39, .32);
+    background: rgba(201, 162, 39, .08);
+    border-radius: 100px; padding: 5px 14px; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(2.05rem, 6vw, 3.2rem);
+    font-weight: 900; line-height: 1.1; letter-spacing: -.6px;
+    margin-bottom: 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  /* Baris Inggris kedua. Dia nempel ke judul biar blok brand-nya utuh satu
+     bahasa, baru di bawahnya pindah ke Indonesia. */
+  .hero .subtag {
+    font-family: 'Lato', sans-serif; font-size: 1.02rem; font-weight: 700;
+    color: var(--gold-soft); letter-spacing: .2px;
+    margin: -6px 0 18px; max-width: 34ch; line-height: 1.55;
+  }
+  .hero .lead {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.04rem; color: #cfc8ba; max-width: 46ch; line-height: 1.8;
+  }
+  .pillars {
+    font-size: .67rem; font-weight: 700; letter-spacing: 2.2px;
+    text-transform: uppercase; color: var(--muted-2);
+    margin-top: 22px;
+  }
+
+  /* Tanda kubus besar di kanan hero, buat mengimbangi teks rata kiri. */
+  .mark { display: flex; justify-content: center; }
+  .mark img { width: min(100%, 310px); height: auto; opacity: .5; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 26px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: .85rem; font-weight: 700; letter-spacing: .3px;
+    text-decoration: none; padding: 13px 22px; border-radius: 10px;
+    border: 1px solid transparent;
+    transition: transform .16s, box-shadow .16s, background .16s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-gold {
+    background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+    color: #191510; box-shadow: 0 8px 22px rgba(201, 162, 39, .22);
+  }
+  .btn-gold:hover { box-shadow: 0 10px 28px rgba(201, 162, 39, .34); }
+  .btn-ghost {
+    border-color: var(--line); color: var(--text); background: rgba(255,255,255,.02);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,.05); }
+
+  /* ---------- Judul bagian ---------- */
+  .shead { margin-bottom: 24px; }
+  .shead .num {
+    font-size: .68rem; font-weight: 700; letter-spacing: 2.4px;
+    text-transform: uppercase; color: var(--muted-2);
+    display: block; margin-bottom: 8px;
+  }
+  .shead h2 {
+    font-size: clamp(1.35rem, 4vw, 1.8rem); font-weight: 800;
+    line-height: 1.25; letter-spacing: -.2px;
+  }
+  .shead p {
+    font-family: 'Lato', sans-serif; color: var(--muted);
+    margin-top: 9px; max-width: 58ch;
+  }
+
+  .grid { display: grid; gap: 14px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+
+  /* ---------- Karya ---------- */
+  .work {
+    display: flex; flex-direction: column; text-decoration: none;
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 21px; transition: border-color .18s, transform .18s;
+  }
+  .work:hover { border-color: rgba(201, 162, 39, .45); transform: translateY(-2px); }
+  .work .tag {
+    align-self: flex-start; font-size: .64rem; font-weight: 700;
+    letter-spacing: 1.6px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px; margin-bottom: 13px;
+  }
+  .tag-paid { background: rgba(201, 162, 39, .14); color: var(--gold);
+              border: 1px solid rgba(201, 162, 39, .3); }
+  .tag-free { background: rgba(127, 174, 107, .13); color: #9ec98a;
+              border: 1px solid rgba(127, 174, 107, .28); }
+  .work h3 { font-size: 1.14rem; font-weight: 800; margin-bottom: 8px; }
+  .work p {
+    font-family: 'Lato', sans-serif; color: var(--muted);
+    font-size: .94rem; line-height: 1.7; margin-bottom: 15px; flex: 1;
+  }
+  .work .go { font-size: .79rem; font-weight: 700; color: var(--gold-soft); }
+  /* Course-nya melebar penuh biar jelas mana yang produk utama. */
+  .work.feature { grid-column: 1 / -1; padding: 26px 24px; }
+  .work.feature h3 { font-size: 1.42rem; }
+  .work.feature p { max-width: 60ch; }
+
+  /* ---------- Tema ---------- */
+  .card {
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 21px 20px;
+  }
+  .card .ico { width: 28px; height: 28px; margin-bottom: 13px; display: block; }
+  .card h3 { font-size: .98rem; font-weight: 700; margin-bottom: 7px; }
+  .card p {
+    font-family: 'Lato', sans-serif; font-size: .92rem;
+    color: var(--muted); line-height: 1.7;
+  }
+
+  /* ---------- Cara kerja ---------- */
+  .rigor {
+    display: grid; gap: 2px; border-radius: var(--radius);
+    overflow: hidden; border: 1px solid var(--line);
+  }
+  .rigor .row {
+    display: grid; grid-template-columns: 185px 1fr; gap: 18px;
+    background: var(--card); padding: 19px 20px;
+  }
+  .rigor dt { font-weight: 700; font-size: .93rem; color: var(--gold-soft); }
+  .rigor dd {
+    font-family: 'Lato', sans-serif; color: var(--muted);
+    font-size: .94rem; line-height: 1.7;
+  }
+
+  /* ---------- Penutup ---------- */
+  .foot {
+    border-top: 1px solid var(--line); margin-top: 16px;
+    padding: 32px 0 44px; text-align: center;
+  }
+  .foot .socials { justify-content: center; margin-bottom: 20px; }
+  .foot small {
+    font-family: 'Lato', sans-serif; color: var(--muted-2);
+    font-size: .8rem; display: block; line-height: 1.85;
+  }
+
+  /* ---- Tablet (dan PC sempit): hero jadi satu kolom, kartu TETEP dua kolom.
+     Kalo kartunya ikut jadi satu kolom di sini, layar 768px kebuang separo. --- */
+  @media (max-width: 860px) {
+    .hero-in { grid-template-columns: 1fr; }
+    /* Kubusnya cuma penyeimbang buat layar lebar. Di layar sempit dia malah
+       ndorong produk jauh ke bawah, jadi disembunyiin. */
+    .mark { display: none; }
+    .rigor .row { grid-template-columns: 1fr; gap: 5px; }
+    .hero { padding: 26px 0 30px; }
+    section { padding: 44px 0; }
+  }
+
+  /* ---- HP: baru di sini semuanya turun jadi satu kolom. ---- */
+  @media (max-width: 580px) {
+    .g2 { grid-template-columns: 1fr; }
+    section { padding: 40px 0; }
+    .hero .lead { max-width: none; font-size: 1rem; line-height: 1.72; }
+    /* Dua tombol dibikin selebar layar biar tepinya rata, bukan patah-patah. */
+    .cta-row .btn { flex: 1 1 100%; justify-content: center; }
+    .work.feature h3 { font-size: 1.24rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/">
+      <img class="cube" src="assets/logo.svg" alt="" width="26" height="26">
+      NYCHOTHESIS
+    </a>
+    <div class="socials">
+      <a href="https://instagram.com/nichokp" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+        </svg>
+      </a>
+      <a href="https://tiktok.com/@nichokp_" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14 3v10.6a3.4 3.4 0 1 1-2.6-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 3c.4 2.4 2 4 4.4 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="https://youtube.com/@NicholasKristianus" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M10.5 9.5v5l4.2-2.5-4.2-2.5Z" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-in">
+      <div>
+        <span class="kicker">Nicholas Kristianus</span>
+        <h1>I explain the <em>unexplainable</em>.</h1>
+        <p class="subtag">Masculinity, femininity, &amp; shadows of modern society.</p>
+        <p class="lead">
+          Gw riset dari multidimensi ilmu: evolusi, psikologi, filsafat, dan
+          sejarah. Langsung dari studi aslinya, dan cuma yang pondasinya kuat.
+          Banyak studi populer ternyata ga bertahan pas diulang peneliti lain,
+          dan yang kayak gitu ga gw pake.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-gold" href="/paradoxical-man/">Lihat course-nya</a>
+          <a class="btn btn-ghost" href="/paradoxical-man/optin.html">Ambil PDF gratis</a>
+        </div>
+        <p class="pillars">Evolution &middot; Psychology &middot; Philosophy &middot; Society</p>
+      </div>
+
+      <div class="mark" aria-hidden="true">
+        <img src="assets/logo.svg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section id="karya">
+    <div class="shead">
+      <span class="num">01 &middot; Karya</span>
+      <h2>Yang bisa lu buka sekarang</h2>
+    </div>
+    <div class="grid g2">
+      <a class="work feature" href="/paradoxical-man/">
+        <span class="tag tag-paid">Course &middot; Rp299.000</span>
+        <h3>Paradoxical Man</h3>
+        <p>
+          Kelas lengkap soal masculinity paradox. Kenapa tuntutan ke cowo saling
+          tabrakan, dan apa yang masuk akal lu lakuin begitu polanya keliatan.
+        </p>
+        <span class="go">Lihat detailnya &rarr;</span>
+      </a>
+      <a class="work" href="/paradoxical-man/optin.html">
+        <span class="tag tag-free">Gratis</span>
+        <h3>Cowo yang Susah Ditolak</h3>
+        <p>
+          PDF pendek soal apa yang sebenernya bikin satu cowo susah banget
+          ditolak. Dan kenapa tebakan yang paling umum soal ini justru meleset.
+        </p>
+        <span class="go">Ambil PDF-nya &rarr;</span>
+      </a>
+      <a class="work" href="https://discord.gg/2TBDnfQkS" target="_blank" rel="noopener">
+        <span class="tag tag-free">Discord &middot; Gratis</span>
+        <h3>Komunitas</h3>
+        <p>
+          Tempat ngobrol bareng orang-orang yang lagi mikirin hal yang sama.
+          Gratis, ga ada syarat apa-apa.
+        </p>
+        <span class="go">Gabung &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="tema">
+    <div class="shead">
+      <span class="num">02 &middot; Tema</span>
+      <h2>Empat sudut yang gw pake</h2>
+      <p>
+        Satu pertanyaan jarang kelar dari satu disiplin doang. Makanya tiap
+        topik gw dorong lewat empat arah sekaligus.
+      </p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 20c0-8 4-12 8-12s4 3 4 6M20 4c0 8-4 12-8 12" stroke="#C9A227" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="19.5" cy="4.5" r="1.6" fill="#C9A227"/>
+        </svg>
+        <h3>Evolution</h3>
+        <p>
+          Dorongan yang lu rasain hari ini udah kebentuk jauh sebelum ada
+          budaya, agama, atau sosmed. Sebagian besar BUKAN pilihan lu.
+        </p>
+      </div>
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3a6 6 0 0 0-6 6c0 2 .8 3 1.6 4 .6.8.9 1.5.9 2.4V17h7v-1.6c0-.9.3-1.6.9-2.4.8-1 1.6-2 1.6-4a6 6 0 0 0-6-6ZM9.5 20h5" stroke="#C9A227" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>Psychology</h3>
+        <p>
+          Apa yang sebenernya kejadian di kepala pas orang ketarik, nolak, atau
+          malah bertahan di hubungan yang jelas-jelas ngerugiin dia.
+        </p>
+      </div>
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.5" stroke="#C9A227" stroke-width="1.4" opacity=".5"/>
+          <path d="M12 4v16M6 8l12 8M18 8 6 16" stroke="#C9A227" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <h3>Philosophy</h3>
+        <p>
+          Ada pertanyaan yang ga akan pernah kejawab sama data. Misal, apa yang
+          pantas, apa yang bener, dan siapa yang berhak nentuin itu.
+        </p>
+      </div>
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 20V6a2 2 0 0 1 2-2h12v16M4 20h16M4 20a2 2 0 0 1 2-2h12M8 8h6M8 12h6" stroke="#C9A227" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>Society</h3>
+        <p>
+          Dari mana tuntutan yang berlaku sekarang berasal, dan kapan persisnya
+          standar itu berubah bentuk tanpa kita sadar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="cara">
+    <div class="shead">
+      <span class="num">03 &middot; Cara Kerja</span>
+      <h2>Kenapa isinya bisa dipegang</h2>
+      <p>
+        Topik ini penuh orang yang ngomong kenceng tanpa pondasi. Gw pake tiga
+        aturan biar ga ikut jadi bagian dari masalahnya.
+      </p>
+    </div>
+    <dl class="rigor">
+      <div class="row">
+        <dt>Citation tiering</dt>
+        <dd>
+          Tiap klaim gw kasih tingkat. Meta-analisis beda bobot sama satu studi
+          tunggal, dan beda lagi sama pengamatan pribadi gw. Yang lemah tetep boleh
+          disebut, tapi ga disamarin biar keliatan kuat.
+        </dd>
+      </div>
+      <div class="row">
+        <dt>Steelman</dt>
+        <dd>
+          Sebelum gw bantah satu posisi, gw susun dulu versi paling kuatnya
+          (seringnya malah lebih rapi dari yang aslinya diomongin orang). Kalo
+          argumen gw cuma menang lawan versi lemahnya, berarti argumen gw sendiri
+          yang belum kelar.
+        </dd>
+      </div>
+      <div class="row">
+        <dt>Anti-overclaim</dt>
+        <dd>
+          Korelasi ga gw naikin pangkat jadi sebab-akibat. Kalo datanya cuma cukup
+          buat bilang "cenderung", ya gw bilang cenderung. Yang gw belum tau, gw
+          bilang belum tau.
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <footer class="foot">
+    <div class="socials">
+      <a href="https://instagram.com/nichokp" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+        </svg>
+      </a>
+      <a href="https://tiktok.com/@nichokp_" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14 3v10.6a3.4 3.4 0 1 1-2.6-3.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 3c.4 2.4 2 4 4.4 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="https://youtube.com/@NicholasKristianus" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M10.5 9.5v5l4.2-2.5-4.2-2.5Z" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+    <small>
+      Nychothesis &middot; Nicholas Kristianus<br>
+      &copy; <span id="thn">2026</span> Nychothesis. Semua hak dilindungi.
+    </small>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('thn').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
