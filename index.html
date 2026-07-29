@@ -57,6 +57,10 @@
   }
   /* Logonya rumit, di bawah ~30px anyamannya jadi gumpalan. */
   .brand .cube { width: 30px; height: 30px; flex: none; }
+  /* Separuh belakang nama brand-nya emas, sama kayak halaman funnel.
+     Namanya dibungkus satu span biar ga kepecah jadi dua item flex,
+     yang bikin ada jarak nyempil di tengah kata. */
+  .brand .bname b { color: var(--gold); font-weight: inherit; }
 
   /* Ikon sosial dipakai dua kali: di atas dan di penutup. */
   .socials { display: flex; gap: 8px; }
@@ -234,8 +238,8 @@
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/">
-      <img class="cube" src="assets/logo.svg" alt="" width="26" height="26">
-      NYCHOTHESIS
+      <img class="cube" src="assets/logo.svg" alt="" width="30" height="30">
+      <span class="bname">NYCHO<b>THESIS</b></span>
     </a>
     <div class="socials">
       <a href="https://instagram.com/nichokp" target="_blank" rel="noopener" aria-label="Instagram">
