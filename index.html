@@ -77,8 +77,26 @@
   .hero { padding: 40px 0 34px; }
   /* Hero rata kiri, selebar isi halaman. Yang dibatesin cuma judul (13ch) sama
      paragrafnya (46ch), jadi di layar lebar judulnya yang ngisi ruang, bukan
-     dibiarin kosong. Logo gede yang dulu di kanan udah dicopot. */
+     dibiarin kosong.
+     Di layar lebar, sisi kanan diisi kubus gede sebagai cap air. Dia sengaja
+     samar biar ga ngerebut perhatian dari judul. Di tablet ke bawah dia
+     dimatiin total, karena di kolom sempit dia malah mepet judul. */
   .hero-in { max-width: 100%; }
+  .hero-mark { display: none; }
+  @media (min-width: 861px) {
+    .hero-in {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 46px; align-items: center;
+    }
+    .hero-mark {
+      display: block; width: clamp(190px, 21vw, 280px); height: auto;
+      opacity: .16; flex: none; justify-self: end;
+      /* Kubusnya aslinya terang. Difilter biar nyatu ke latar gelap dan
+         kena nada emas, bukan putih yang nyolok. */
+      filter: sepia(1) saturate(2.2) hue-rotate(-14deg);
+      pointer-events: none; user-select: none;
+    }
+  }
   .kicker {
     display: inline-block; font-size: .68rem; font-weight: 700;
     letter-spacing: 2.4px; text-transform: uppercase; color: var(--gold);
@@ -282,6 +300,7 @@
         </div>
         <p class="pillars">Evolution &middot; Psychology &middot; Philosophy &middot; Society</p>
       </div>
+      <img class="hero-mark" src="assets/logo.svg" alt="" width="280" height="280" aria-hidden="true">
     </div>
   </section>
 
