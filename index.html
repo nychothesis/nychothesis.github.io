@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nychothesis · Nicholas Kristianus</title>
-<meta name="description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern, dibedah lewat evolusi, psikologi, filsafat, sama sejarah.">
+<meta name="description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern, dibedah lewat empat lensa: evolution, psychology, philosophy, society.">
 <meta property="og:title" content="Nychothesis · Nicholas Kristianus">
 <meta property="og:description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern.">
 <meta property="og:type" content="website">
@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://nychothesis.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="628">
-<meta property="og:image:alt" content="Nychothesis — Evolution, Psychology, Philosophy, Society">
+<meta property="og:image:alt" content="Nychothesis: Evolution, Psychology, Philosophy, Society">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nychothesis · Nicholas Kristianus">
 <meta name="twitter:description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern.">
@@ -55,6 +55,12 @@
   .wrap   { max-width: 980px; margin: 0 auto; padding: 0 22px; }
   section { padding: 52px 0; }
   a { color: inherit; }
+
+  /* Sorotan frasa kunci: dinaikin ke emas lembut, bukan di-bold putih.
+     Putih tebel di latar gelap bikin silau dan berebut sama judul; emas lembut
+     naik tanpa teriak. Dipake irit, maksimal satu frasa per paragraf, karena
+     kalo semua disorot ya sama aja ga ada yang disorot. */
+  .hl { color: var(--gold-soft); font-weight: 700; }
 
   /* ---------- Kepala halaman ---------- */
   .top {
@@ -132,11 +138,20 @@
     font-family: 'Atkinson Hyperlegible', sans-serif;
     font-size: 1.04rem; color: #cfc8ba; max-width: 46ch; line-height: 1.85;
   }
+  /* Empat pilar resmi brand. Dulu abu-abu redup (--muted-2) dan nyaris ilang di
+     latar gelap, padahal ini salah satu hal yang paling perlu nempel di kepala
+     orang. Dinaikin ke emas lembut, dikasih garis pemisah di atasnya biar
+     kebaca sebagai satu blok tersendiri, bukan ekor paragraf. */
   .pillars {
-    font-size: .67rem; font-weight: 700; letter-spacing: 2.2px;
-    text-transform: uppercase; color: var(--muted-2);
-    margin-top: 22px;
+    font-size: .74rem; font-weight: 700; letter-spacing: 2.4px;
+    text-transform: uppercase; color: var(--gold-soft);
+    margin-top: 26px; padding-top: 18px;
+    border-top: 1px solid rgba(201, 162, 39, .22);
+    display: inline-block;
   }
+  /* Titik pemisahnya diredupin biar keempat katanya yang kebaca duluan,
+     bukan tanda baris jadi bunyi "titik-titik-titik". */
+  .pillars i { font-style: normal; color: rgba(201, 162, 39, .45); }
 
   .cta-row { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 26px; }
   .btn {
@@ -199,10 +214,43 @@
     font-size: .94rem; line-height: 1.7; margin-bottom: 15px; flex: 1;
   }
   .work .go { font-size: .79rem; font-weight: 700; color: var(--gold-soft); }
-  /* Course-nya melebar penuh biar jelas mana yang produk utama. */
-  .work.feature { grid-column: 1 / -1; padding: 26px 24px; }
-  .work.feature h3 { font-size: 1.42rem; }
-  .work.feature p { max-width: 60ch; }
+  /* Course = produk utama, jadi dibedain dari kartu gratisan di bawahnya.
+     Caranya lewat kartunya sendiri (latar kehangetan emas, garis tepi lebih
+     tegas, sinar tipis di bawah), bukan lewat nyorot kata di dalem teksnya.
+     Kalo kata di dalem paragraf yang disorot, dia malah berebut sama tag emas
+     dan link emas yang udah ada di kartu yang sama. */
+  .work.feature {
+    grid-column: 1 / -1; padding: 30px 28px;
+    background: linear-gradient(150deg, #2e2617 0%, #241e18 42%, #1b1917 100%);
+    border-color: rgba(201, 162, 39, .5);
+    box-shadow: 0 14px 42px rgba(201, 162, 39, .13);
+    position: relative; overflow: hidden;
+  }
+  /* Pita emas di bibir atas kartu. Ini penanda paling murah tapi paling kebaca:
+     matanya nangkep dia duluan sebelum baca apa pun. */
+  .work.feature::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 42%, transparent 100%);
+  }
+  .work.feature:hover {
+    border-color: rgba(201, 162, 39, .72);
+    box-shadow: 0 18px 48px rgba(201, 162, 39, .2);
+  }
+  .work.feature h3 { font-size: 1.52rem; }
+  /* Teksnya dinaikin dikit dari abu kartu biasa: kartu ini lebih terang, teks
+     yang sama jadi keliatan lebih tenggelam kalo ga ikut dinaikin. */
+  .work.feature p { max-width: 60ch; color: #b3ac9d; }
+  /* Di kartu gratisan, ajakannya cukup teks emas. Di kartu utama dia dinaikin
+     jadi tombol isi, biar jelas mana aksi yang paling diminta. Kartunya sendiri
+     <a>, jadi ini cuma span yang didandanin, bukan tombol beneran. */
+  .work.feature .go {
+    align-self: flex-start; margin-top: 4px;
+    background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+    color: #191510; padding: 12px 22px; border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(201, 162, 39, .24);
+    transition: box-shadow .18s;
+  }
+  .work.feature:hover .go { box-shadow: 0 10px 28px rgba(201, 162, 39, .36); }
 
   /* ---------- Lensa ---------- */
   .card {
@@ -231,6 +279,26 @@
     font-family: 'Atkinson Hyperlegible', sans-serif; color: var(--muted);
     font-size: .94rem; line-height: 1.7;
   }
+
+  /* Tangga bukti di dalem Citation tiering. Aturan ini yang paling gampang
+     kedengeran ngambang kalo cuma diomongin lewat kalimat, jadi tingkatannya
+     ditampilin apa adanya. Orang bisa mindahin mata dari kuat ke lemah dan
+     langsung ngerti sistemnya tanpa harus baca sampe abis. */
+  .tiers { list-style: none; margin-top: 14px; display: grid; gap: 9px; }
+  .tiers li {
+    display: grid; grid-template-columns: 76px 1fr;
+    gap: 12px; align-items: start;
+  }
+  .tiers .lv {
+    font-family: 'Poppins', sans-serif; font-size: .62rem; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase; text-align: center;
+    padding: 4px 0; border-radius: 5px; border: 1px solid; line-height: 1.5;
+  }
+  /* Warnanya sengaja meredup dari atas ke bawah, jadi kekuatan buktinya
+     kebaca dari warnanya duluan, sebelum kata-katanya. */
+  .lv-1 { color: var(--gold);   border-color: rgba(201,162,39,.45); background: rgba(201,162,39,.12); }
+  .lv-2 { color: #a89a72;       border-color: rgba(201,162,39,.22); background: rgba(201,162,39,.05); }
+  .lv-3 { color: var(--muted-2); border-color: var(--line);          background: rgba(255,255,255,.02); }
 
   /* ---------- Penutup ---------- */
   .foot {
@@ -300,16 +368,15 @@
         <h1>I explain the <em>unexplainable</em>.</h1>
         <p class="subtag">Masculinity, femininity, &amp; shadows of modern society.</p>
         <p class="lead">
-          Gw riset dari multidimensi ilmu: evolusi, psikologi, filsafat, dan
-          sejarah. Langsung dari studi aslinya, dan cuma yang pondasinya kuat.
-          Banyak studi populer ternyata ga bertahan pas diulang peneliti lain,
-          dan yang kayak gitu ga gw pake.
+          Gw riset langsung dari studi aslinya, dan cuma yang pondasinya kuat.
+          Banyak studi populer ga bertahan pas diulang peneliti lain. Yang kayak
+          gitu ga gw pake.
         </p>
+        <p class="pillars">Evolution <i>&middot;</i> Psychology <i>&middot;</i> Philosophy <i>&middot;</i> Society</p>
         <div class="cta-row">
           <a class="btn btn-gold" href="/paradoxical-man/">Lihat course-nya</a>
           <a class="btn btn-ghost" href="/paradoxical-man/optin.html">Ambil PDF gratis</a>
         </div>
-        <p class="pillars">Evolution &middot; Psychology &middot; Philosophy &middot; Society</p>
       </div>
       <img class="hero-mark" src="assets/logo.svg" alt="" width="280" height="280" aria-hidden="true">
     </div>
@@ -348,7 +415,7 @@
           Tempat ngobrol dan ngumpul bareng orang-orang yang demen topik dan
           diskusi yang sama kayak lu.
         </p>
-        <span class="go">Gabung &rarr;</span>
+        <span class="go">Join &rarr;</span>
       </a>
     </div>
   </section>
@@ -356,11 +423,9 @@
   <section id="lensa">
     <div class="shead">
       <span class="num">02 &middot; Lensa</span>
-      <h2>Empat lensa, satu pertanyaan</h2>
+      <h2>Satu pertanyaan, empat lensa</h2>
       <p>
-        Buat jawab pertanyaan yang kompleks, ga bisa cuma dari satu lensa ilmu
-        doang. Makanya gw garap pakai empat lensa sekaligus, biar jawabannya
-        lebih holistik.
+        Pertanyaan yang kompleks ga bisa dijawab dari satu lensa ilmu doang.
       </p>
     </div>
     <div class="grid g2">
@@ -372,8 +437,8 @@
         </svg>
         <h3>Evolution</h3>
         <p>
-          Kenapa insting yang kebentuk ribuan tahun lalu masih nyetir pilihan lu
-          hari ini, padahal lingkungannya udah beda total.
+          Banyak kelakuan manusia yang keliatan aneh hari ini sebenernya bawaan
+          evolusi. Bukan ga masuk akal, cuma masuk akalnya di zaman yang beda.
         </p>
       </div>
       <div class="card">
@@ -382,9 +447,9 @@
         </svg>
         <h3>Psychology</h3>
         <p>
-          Apa yang kejadian di kepala pas orang ketarik, nolak, atau malah
-          bertahan di hubungan yang ngerugiin. Sampai ke kimia otaknya: dopamin,
-          oksitosin, testosteron.
+          Kelakuan yang paling susah dijelasin hampir selalu punya pola. Polanya
+          jalan di relasi ke diri sendiri, ke orang lain, sampai ke perilaku
+          masyarakat.
         </p>
       </div>
       <div class="card">
@@ -394,8 +459,8 @@
         </svg>
         <h3>Philosophy</h3>
         <p>
-          Ada pertanyaan yang ga akan pernah kejawab sama data. Misal, apa yang
-          pantas, apa yang bener, dan siapa yang berhak nentuin itu.
+          Ada pertanyaan yang ga akan pernah bisa dijawab sama data. Misalnya,
+          apa yang bener &amp; bijak, kenapa, dan siapa yang berhak nentuin itu.
         </p>
       </div>
       <div class="card">
@@ -404,8 +469,9 @@
         </svg>
         <h3>Society</h3>
         <p>
-          Dari mana "standar society" yang berlaku sekarang berasal, dan apa aja
-          narasi yang kebentuk selama ini tanpa kita sadar.
+          Yang kita anggep kebenaran absolut sering cuma bentukan kultur. Di
+          tempat lain, yang normal bisa beda jauh, dan justru kita yang ngeliat
+          itu aneh.
         </p>
       </div>
     </div>
@@ -416,34 +482,41 @@
       <span class="num">03 &middot; Cara Kerja</span>
       <h2>Kenapa isinya bisa dipegang</h2>
       <p>
-        Topik ini penuh orang yang ngomong kenceng tanpa pondasi. Gw pake tiga
-        aturan biar ga ikut jadi bagian dari masalahnya.
+        Sekarang siapa aja bisa ngeklaim apa pun sebagai kebenaran, dan yang
+        otoritasnya keliatan tinggi pun ga kebal. Repotnya, orang biasa langsung
+        ngangguk begitu liat otoritasnya. Gw pake tiga aturan di bawah. Bukan
+        biar gw ga mungkin salah, tapi biar peluang salahnya sekecil mungkin.
       </p>
     </div>
     <dl class="rigor">
       <div class="row">
         <dt>Citation tiering</dt>
         <dd>
-          Tiap klaim gw kasih tingkat. Meta-analisis beda bobot sama satu studi
-          tunggal, dan beda lagi sama pengamatan pribadi gw. Yang lemah tetep boleh
-          disebut, tapi ga disamarin biar keliatan kuat.
+          Tiap klaim gw kasih tingkat, biar lu tau seberapa kuat pijakannya.
+          <ul class="tiers">
+            <li><span class="lv lv-1">Kuat</span> Meta-analisis, studi yang udah
+              berhasil diulang peneliti lain, atau temuan yang konsisten lintas
+              budaya.</li>
+            <li><span class="lv lv-2">Sedang</span> Satu studi tunggal. Gw pake,
+              tapi gw sebut apa adanya.</li>
+            <li><span class="lv lv-3">Opini</span> Pengamatan pribadi gw. Bukan
+              studi, dan gw ga bakal ngemasnya kayak studi.</li>
+          </ul>
         </dd>
       </div>
       <div class="row">
-        <dt>Steelman</dt>
+        <dt>Ga cari pembenaran</dt>
         <dd>
-          Sebelum gw bantah satu posisi, gw susun dulu versi paling kuatnya
-          (seringnya malah lebih rapi dari yang aslinya diomongin orang). Kalo
-          argumen gw cuma menang lawan versi lemahnya, berarti argumen gw sendiri
-          yang belum kelar.
+          Posisi gw bukan harga mati. Kalo ada bantahan yang lebih kuat dari
+          argumen gw, ya itu yang gw pake, bukan yang bikin gw keliatan bener.
         </dd>
       </div>
       <div class="row">
         <dt>Anti-overclaim</dt>
         <dd>
-          Korelasi ga gw naikin pangkat jadi sebab-akibat. Kalo datanya cuma cukup
-          buat bilang "cenderung", ya gw bilang cenderung. Yang gw belum tau, gw
-          bilang belum tau.
+          Dua hal yang sering barengan belum tentu sebab-akibat, dan gw ga bakal
+          nulisnya gitu. Kalo datanya cuma cukup buat bilang "cenderung", ya gw
+          bilang cenderung. Yang gw belum tau, gw bilang belum tau.
         </dd>
       </div>
     </dl>
