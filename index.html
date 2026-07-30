@@ -233,10 +233,15 @@
      tegas, sinar tipis di bawah), bukan lewat nyorot kata di dalem teksnya.
      Kalo kata di dalem paragraf yang disorot, dia malah berebut sama tag emas
      dan link emas yang udah ada di kartu yang sama. */
+  /* Garis tepinya bergradien, bukan emas rata. Triknya dua latar sekaligus:
+     padding-box buat isi kartu, border-box buat garisnya. Hasilnya garis yang
+     terang di satu sudut terus meredup, persis kayak logam kena cahaya. */
   .work.feature {
     grid-column: 1 / -1; padding: 30px 28px;
-    background: linear-gradient(150deg, #2e2617 0%, #241e18 42%, #1b1917 100%);
-    border-color: rgba(201, 162, 39, .5);
+    background:
+      linear-gradient(150deg, #2e2617 0%, #241e18 42%, #1b1917 100%) padding-box,
+      linear-gradient(135deg, rgba(224,195,126,.85), rgba(201,162,39,.22) 45%, rgba(201,162,39,.55)) border-box;
+    border: 1px solid transparent;
     box-shadow: 0 14px 42px rgba(201, 162, 39, .13);
     position: relative; overflow: hidden;
   }
@@ -247,8 +252,7 @@
     background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 42%, transparent 100%);
   }
   .work.feature:hover {
-    border-color: rgba(201, 162, 39, .72);
-    box-shadow: 0 18px 48px rgba(201, 162, 39, .2);
+    box-shadow: 0 18px 48px rgba(201, 162, 39, .24);
   }
   .work.feature h3 { font-size: 1.52rem; }
   /* Teksnya dinaikin dikit dari abu kartu biasa: kartu ini lebih terang, teks
@@ -332,6 +336,44 @@
     .hero { padding: 26px 0 30px; }
     section { padding: 44px 0; }
   }
+
+
+  /* ============ AURA: bola cahaya latar ============
+     Ini yang bikin halaman berasa "mahal", bukan animasi scroll. Permukaannya
+     jadi ga pernah warna rata: selalu ada cahaya yang jatuh dari suatu arah.
+
+     Dua hal penting soal cara bikinnya:
+     1. Ga pake filter: blur(). Radial-gradient yang ujungnya transparan udah
+        lembut dari sananya, dan ongkosnya nol. blur() di benda selebar layar
+        itu berat banget di HP.
+     2. Yang dianimasiin cuma transform, dan bolanya position:fixed. Jadi dia
+        digarap kartu grafis dan ga maksa halaman ngitung ulang tata letak.
+     Pelan banget (20-30 detik sekali putaran) biar kerasa "idup" tanpa bikin
+     mata capek atau ngerebut perhatian dari teks. */
+  .aura { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .aura i { position: absolute; display: block; border-radius: 50%; }
+  .aura .a1 {
+    width: 78vw; height: 78vw; max-width: 820px; max-height: 820px;
+    top: -26vw; right: -20vw;
+    background: radial-gradient(circle, rgba(201,162,39,.20), rgba(201,162,39,.06) 45%, transparent 70%);
+    animation: apung-a 24s ease-in-out infinite;
+  }
+  .aura .a2 {
+    width: 66vw; height: 66vw; max-width: 660px; max-height: 660px;
+    bottom: -24vw; left: -20vw;
+    background: radial-gradient(circle, rgba(176,65,60,.13), rgba(176,65,60,.04) 45%, transparent 70%);
+    animation: apung-b 31s ease-in-out infinite;
+  }
+  @keyframes apung-a {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    50%      { transform: translate3d(-4vw, 5vh, 0) scale(1.12); }
+  }
+  @keyframes apung-b {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    50%      { transform: translate3d(5vw, -4vh, 0) scale(1.15); }
+  }
+  /* Isi halaman harus di ATAS aura, makanya dikasih lapis sendiri. */
+  .wrap { position: relative; z-index: 1; }
 
   /* ==================== GERAK ====================
      Sengaja berani. Tapi tiga pagar ini ga boleh dilanggar:
@@ -488,6 +530,7 @@
   .hero-mark { will-change: transform; }
 
   @media (prefers-reduced-motion: reduce) {
+    .aura .a1, .aura .a2 { animation: none; }
     .js-anim .rv, .js-anim .rv.in,
     .js-anim .work.rv, .js-anim .card.rv, .js-anim .rigor .row.rv,
     .js-anim .hero-in > div > *, .js-anim.ready .hero-in > div > *,
@@ -519,6 +562,8 @@
 </style>
 </head>
 <body>
+<div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i></div>
+
 
 <div class="wrap">
   <header class="top">
