@@ -24,6 +24,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<!-- Dipasang di <head>, sebelum apa pun kegambar. Kalo ditaro di bawah, isinya
+     sempet keliatan sekejap terus ilang lagi, dan itu keliatan kayak halaman
+     rusak. Kalo JS mati, class ini ga pernah kepasang dan semuanya tampil utuh. -->
+<script>document.documentElement.className += ' js-anim';</script>
 <style>
   :root {
     --bg:        #121110;
@@ -142,9 +146,19 @@
      latar gelap, padahal ini salah satu hal yang paling perlu nempel di kepala
      orang. Dinaikin ke emas lembut, dikasih garis pemisah di atasnya biar
      kebaca sebagai satu blok tersendiri, bukan ekor paragraf. */
+  /* Empat pilarnya harus muat SATU baris, termasuk di HP. Kalo kepecah dua
+     baris, "SOCIETY" jatuh sendirian dan blok ini keliatan kayak kalimat
+     nyasar, bukan satu kesatuan.
+     Caranya: nowrap biar ga pernah pecah, terus ukuran huruf sama jarak
+     hurufnya ikut lebar layar. Di HP dia ngecil sendiri sampe muat, di layar
+     lebar berhenti di ukuran normal. Ga pake breakpoint, jadi ga ada lebar
+     layar tertentu yang kelewat. */
   .pillars {
-    font-size: .74rem; font-weight: 700; letter-spacing: 2.4px;
+    font-size: clamp(.4rem, 2.2vw, .74rem);
+    font-weight: 700;
+    letter-spacing: clamp(.5px, .3vw, 2.4px);
     text-transform: uppercase; color: var(--gold-soft);
+    white-space: nowrap; max-width: 100%;
     margin-top: 26px; padding-top: 18px;
     border-top: 1px solid rgba(201, 162, 39, .22);
     display: inline-block;
@@ -319,6 +333,180 @@
     section { padding: 44px 0; }
   }
 
+  /* ==================== GERAK ====================
+     Sengaja berani. Tapi tiga pagar ini ga boleh dilanggar:
+     1. JS mati -> semua tetep keliatan. Keadaan sembunyi cuma nempel di bawah
+        .js-anim, dan class itu cuma dipasang sama JS.
+     2. Cuma opacity/transform/filter yang digerakin, dan blur cuma dipake di
+        elemen yang jumlahnya dikit. Ini yang bikin scroll tetep mulus.
+     3. Yang minta gerakan dikurangin lewat setelan HP-nya, dapet halaman diem
+        total. Buat sebagian orang animasi bikin pusing beneran. */
+
+  /* --- Judul dipecah per kata, tiap kata naik dari balik topeng ---
+     Ini bagian yang paling "wow". Tiap kata punya kotak yang overflow-nya
+     dipotong, jadi katanya keliatan muncul dari balik garis, bukan sekadar
+     memudar. Jedanya beruntun, jadi judulnya kayak dibacain satu-satu. */
+  .w { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .js-anim .hero h1 .w > span {
+    display: inline-block;
+    transform: translateY(115%) rotate(4deg);
+  }
+  .js-anim.ready .hero h1 .w > span {
+    transform: none;
+    transition: transform .95s cubic-bezier(.16,.9,.24,1);
+    transition-delay: calc(var(--i, 0) * .07s);
+  }
+
+  /* Sisa isi hero: naik lebih jauh + sempet buram, biar berasa "masuk fokus". */
+  .js-anim .hero-in > div > *:not(h1) {
+    opacity: 0; transform: translateY(30px); filter: blur(9px);
+  }
+  .js-anim.ready .hero-in > div > *:not(h1) {
+    opacity: 1; transform: none; filter: none;
+    transition: opacity .9s ease, transform .9s cubic-bezier(.16,.9,.24,1),
+                filter .9s ease;
+  }
+  .js-anim.ready .hero-in > div > *:nth-child(1) { transition-delay: .05s; }
+  .js-anim.ready .hero-in > div > *:nth-child(3) { transition-delay: .5s; }
+  .js-anim.ready .hero-in > div > *:nth-child(4) { transition-delay: .62s; }
+  .js-anim.ready .hero-in > div > *:nth-child(5) { transition-delay: .74s; }
+  .js-anim.ready .hero-in > div > *:nth-child(6) { transition-delay: .84s; }
+
+  /* Kubus: masuk sambil muter, terus lanjut ngambang pelan selamanya.
+     Gerakan yang ga pernah berhenti bikin halaman berasa "idup", tapi karena
+     dia samar dan pelan banget, dia ga ganggu baca. */
+  .js-anim .hero-mark { opacity: 0; transform: scale(.82) rotate(-22deg); }
+  .js-anim.ready .hero-mark {
+    opacity: .16; transform: none;
+    transition: opacity 1.8s ease .55s, transform 2.1s cubic-bezier(.16,.9,.24,1) .55s;
+    animation: ngambang 13s ease-in-out 2.6s infinite;
+  }
+  @keyframes ngambang {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-16px) rotate(4deg); }
+  }
+
+  /* --- Yang muncul pas discroll ---
+     Naiknya lebih jauh, sempet miring dikit di sumbu X, dan buram dulu.
+     Efek miring butuh perspective di induknya, makanya .grid sama .rigor
+     dikasih perspective di bawah. */
+  /* CATATAN PENTING soal :not(.in) di bawah ini.
+     Keadaan awal tiap benda ditulis pake selector yang lebih spesifik daripada
+     aturan .rv.in yang ngebalikin ke posisi normal. Di CSS, yang lebih spesifik
+     yang menang, jadi tanpa :not(.in) benda-benda ini KEKUNCI di posisi awal
+     selamanya: kartu nyangkut miring dan numpuk, baris aturan ilang total
+     karena opacity-nya ketahan 0.
+     Makanya tiap keadaan awal dikasih :not(.in). Begitu class .in nempel,
+     aturannya berhenti kena, dan .rv.in bebas ngembaliin ke posisi normal. */
+  .js-anim .rv:not(.in) { opacity: 0; transform: translateY(46px) scale(.965); filter: blur(7px); }
+  .js-anim .rv.in {
+    opacity: 1; transform: none; filter: none;
+    transition: opacity .85s ease, transform .95s cubic-bezier(.16,.9,.24,1),
+                filter .85s ease;
+    transition-delay: var(--d, 0s);
+  }
+  .grid, .rigor { perspective: 1200px; }
+  .js-anim .work.rv:not(.in), .js-anim .card.rv:not(.in), .js-anim .rigor .row.rv:not(.in) {
+    transform: translateY(46px) rotateX(9deg) scale(.965);
+    transform-origin: 50% 0%;
+  }
+
+  /* Kilau emas: lebih sering dan lebih tegas dari sebelumnya. */
+  .btn-gold, .work.feature .go { position: relative; overflow: hidden; }
+  .btn-gold::after, .work.feature .go::after {
+    content: ""; position: absolute; top: 0; left: -65%;
+    width: 48%; height: 100%; pointer-events: none;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent);
+    transform: skewX(-18deg);
+    animation: kilau 4.4s ease-in-out 1.2s infinite;
+  }
+  @keyframes kilau { 0% { left: -65%; } 26%, 100% { left: 135%; } }
+
+  /* Denyut pelan di bayangan tombol utama, biar dia ga pernah bener-bener diem. */
+  .btn-gold { animation: denyut 3.6s ease-in-out infinite; }
+  @keyframes denyut {
+    0%, 100% { box-shadow: 0 8px 22px rgba(201,162,39,.22); }
+    50%      { box-shadow: 0 12px 34px rgba(201,162,39,.42); }
+  }
+
+  .work, .card, .rigor .row { transition: border-color .18s, transform .18s, background .18s; }
+  .work:hover, .card:hover { transform: translateY(-4px); }
+
+  /* --- Garis kemajuan scroll di bibir atas layar ---
+     Kecil, tapi dia satu-satunya benda yang gerak TERUS pas discroll. Itu yang
+     bikin halaman berasa responsif, bukan cuma "muncul sekali terus diem". */
+  .progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 90;
+    background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+    transform: scaleX(0); transform-origin: 0 50%;
+    box-shadow: 0 0 12px rgba(201,162,39,.55);
+  }
+
+  /* --- Judul bagian juga dipecah per kata ---
+     Efek yang bikin hero berasa wow dipindah ke bawah, dan di sini dia jalan
+     pas discroll. Ini yang paling kena, karena tiap bagian jadi punya momen
+     pembuka sendiri, bukan langsung nyodorin kartu. */
+  .js-anim .shead h2 .w > span {
+    display: inline-block; transform: translateY(115%) rotate(3deg);
+  }
+  .js-anim .shead.in h2 .w > span {
+    transform: none;
+    transition: transform .85s cubic-bezier(.16,.9,.24,1);
+    transition-delay: calc(var(--i, 0) * .06s);
+  }
+  /* Garis emas yang ngegambar sendiri dari kiri ke kanan, di bawah nomor bagian. */
+  .shead .num { position: relative; }
+  .shead .num::after {
+    content: ""; position: absolute; left: 0; bottom: -5px; height: 2px; width: 62px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .js-anim .shead .num::after { transform: scaleX(0); transform-origin: 0 50%; }
+  .js-anim .shead.in .num::after {
+    transform: none; transition: transform .9s cubic-bezier(.16,.9,.24,1) .1s;
+  }
+
+  /* --- Kartu masuk dari kiri-kanan gantian, bukan naik semua dari bawah ---
+     Arah yang selang-seling bikin matanya kerja, jadi berasa lebih rame
+     padahal jarak geraknya sama aja. */
+  .js-anim .grid > *:nth-child(odd).rv:not(.in) {
+    transform: translateX(-52px) translateY(24px) rotateY(10deg) scale(.97);
+  }
+  .js-anim .grid > *:nth-child(even).rv:not(.in) {
+    transform: translateX(52px) translateY(24px) rotateY(-10deg) scale(.97);
+  }
+  /* Kartu utama (course) tetep naik lurus dari bawah, ga ikut selang-seling.
+     Dia produk utama, jadi masuknya harus tegas, bukan nyerong. */
+  .js-anim .work.feature.rv:not(.in) {
+    transform: translateY(52px) rotateX(9deg) scale(.96);
+  }
+  /* Baris aturan masuk dari kiri, makin ke bawah makin jauh ancang-ancangnya,
+     jadi kebaca kayak satu gerakan beruntun, bukan tiga benda terpisah. */
+  .js-anim .rigor .row.rv:not(.in) { transform: translateX(-56px); opacity: 0; }
+
+  /* Kubus ikut gerak pas discroll, lebih lambat dari halamannya (parallax).
+     Ini yang bikin latar berasa punya jarak, bukan nempel di kaca. */
+  .hero-mark { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js-anim .rv, .js-anim .rv.in,
+    .js-anim .work.rv, .js-anim .card.rv, .js-anim .rigor .row.rv,
+    .js-anim .hero-in > div > *, .js-anim.ready .hero-in > div > *,
+    .js-anim .hero h1 .w > span, .js-anim.ready .hero h1 .w > span,
+    .js-anim .hero-mark, .js-anim.ready .hero-mark {
+      opacity: 1; transform: none; filter: none; transition: none; animation: none;
+    }
+    .js-anim .hero-mark, .js-anim.ready .hero-mark { opacity: .16; }
+    .js-anim .shead h2 .w > span, .js-anim .shead.in h2 .w > span,
+    .js-anim .grid > *.rv, .js-anim .work.feature.rv, .js-anim .rigor .row.rv {
+      opacity: 1; transform: none; filter: none; transition: none; animation: none;
+    }
+    .js-anim .shead .num::after, .js-anim .shead.in .num::after { transform: none; }
+    .btn-gold, .btn-gold::after, .work.feature .go::after { animation: none; }
+    .btn-gold::after, .work.feature .go::after { display: none; }
+    .progress { display: none; }
+    html { scroll-behavior: auto; }
+  }
+
   /* ---- HP: baru di sini semuanya turun jadi satu kolom. ---- */
   @media (max-width: 580px) {
     .g2 { grid-template-columns: 1fr; }
@@ -375,7 +563,6 @@
         <p class="pillars">Evolution <i>&middot;</i> Psychology <i>&middot;</i> Philosophy <i>&middot;</i> Society</p>
         <div class="cta-row">
           <a class="btn btn-gold" href="/paradoxical-man/">Lihat course-nya</a>
-          <a class="btn btn-ghost" href="/paradoxical-man/optin.html">Ambil PDF gratis</a>
         </div>
       </div>
       <img class="hero-mark" src="assets/logo.svg" alt="" width="280" height="280" aria-hidden="true">
@@ -553,6 +740,111 @@
 
 <script>
   document.getElementById('thn').textContent = new Date().getFullYear();
+</script>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var diem = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---------- Pemecah kata ----------
+    // Tiap kata dibungkus kotak yang overflow-nya dipotong, isinya digeser ke
+    // bawah, terus dinaikin beruntun. Dikerjain di JS, bukan ditulis manual di
+    // HTML, biar teksnya tetep satu kalimat utuh: enak diedit, dan yang kebaca
+    // Google sama pembaca layar tetep kalimat normal.
+    // Rekursif, biar <em> yang bikin sebagian kata emas ga ikut kebongkar.
+    function belahKata(el) {
+      var urut = 0;
+      (function jalan(induk) {
+        Array.prototype.slice.call(induk.childNodes).forEach(function (node) {
+          if (node.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            node.nodeValue.split(/(\s+)/).forEach(function (potong) {
+              if (!potong) return;
+              if (/^\s+$/.test(potong)) { frag.appendChild(document.createTextNode(' ')); return; }
+              var kotak = document.createElement('span');
+              kotak.className = 'w';
+              var isi = document.createElement('span');
+              isi.textContent = potong;
+              // Tanda baca sendirian ikut giliran kata sebelumnya, biar ga naik
+              // belakangan kayak salah ketik yang nyusul.
+              isi.style.setProperty('--i', /^[.,!?;:'"]+$/.test(potong)
+                ? Math.max(0, urut - 1) : urut++);
+              kotak.appendChild(isi);
+              frag.appendChild(kotak);
+            });
+            induk.replaceChild(frag, node);
+          } else if (node.nodeType === 1 && node.className !== 'w') {
+            jalan(node);
+          }
+        });
+      })(el);
+    }
+
+    var judul = document.querySelector('.hero h1');
+    if (judul) belahKata(judul);
+    // Judul tiap bagian dapet perlakuan yang sama, tapi jalannya pas discroll.
+    Array.prototype.forEach.call(document.querySelectorAll('.shead h2'), belahKata);
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { root.classList.add('ready'); });
+    });
+
+    if (diem) return;
+
+    // ---------- Garis kemajuan scroll ----------
+    // Satu-satunya benda yang gerak TERUS-terusan pas discroll. Yang lain cuma
+    // muncul sekali, jadi tanpa ini halaman berasa diem lagi begitu blok-nya
+    // udah lewat.
+    var bar = document.createElement('div');
+    bar.className = 'progress';
+    document.body.appendChild(bar);
+
+    var kubus = document.querySelector('.hero-mark');
+    var nunggu = false;
+
+    function gambar() {
+      nunggu = false;
+      var y = window.pageYOffset;
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX(' + (total > 0 ? Math.min(y / total, 1) : 0) + ')';
+
+      // Kubus jalan lebih lambat dari halamannya. Bedanya kecil (0.16x), tapi
+      // justru itu yang bikin latar berasa punya jarak, bukan nempel di kaca.
+      // Dibatesin sampe 1.2 layar biar dia ga kebawa jauh ke bawah.
+      if (kubus && y < window.innerHeight * 1.2) {
+        kubus.style.transform = 'translateY(' + (y * 0.16) + 'px) rotate(' + (y * 0.012) + 'deg)';
+      }
+    }
+
+    addEventListener('scroll', function () {
+      // Digambar sekali per frame. Kalo ngikutin tiap event scroll mentah,
+      // di HP dia kepanggil ratusan kali sedetik dan malah tersendat.
+      if (!nunggu) { nunggu = true; requestAnimationFrame(gambar); }
+    }, { passive: true });
+    gambar();
+
+    // ---------- Yang muncul pas masuk layar ----------
+    var target = document.querySelectorAll('.shead, .work, .card, .rigor .row, .foot');
+    if (!('IntersectionObserver' in window) || !target.length) return;
+
+    // Jeda beruntun cuma di dalem satu rombongan yang muncul barengan. Kalo
+    // pake nomor urut global, blok paling bawah kena jeda berdetik-detik dan
+    // keliatan kayak nge-lag, bukan kayak animasi.
+    var io = new IntersectionObserver(function (entries) {
+      entries.filter(function (e) { return e.isIntersecting; })
+             .forEach(function (e, i) {
+        e.target.style.setProperty('--d', (Math.min(i, 5) * 0.09) + 's');
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+    Array.prototype.forEach.call(target, function (el) {
+      el.classList.add('rv');
+      io.observe(el);
+    });
+  })();
 </script>
 
 </body>
