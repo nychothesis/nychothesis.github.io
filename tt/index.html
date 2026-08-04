@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Nychothesis</title>
+<link rel="canonical" href="https://nychothesis.com/">
+
+<!-- ============ JALAN PINTAS BIO: TIKTOK ============
+     Yang ditempel di bio TikTok: nychothesis.com/tt
+     Yang sebenernya kebuka:      nychothesis.com/ + tag utm_source=tiktok
+
+     Gunanya biar bio tetep pendek tapi GA4 tetep tau orangnya dateng dari
+     TikTok. Tanpa ini semua traffic sosmed kecatat "direct", karena browser
+     bawaan aplikasi IG/TikTok ngebuang info asal-usul (referrer).
+
+     Kenapa location.replace, BUKAN location.href:
+     replace ga ninggalin jejak di riwayat browser. Kalo pake href, orang yang
+     mencet tombol Back bakal balik ke halaman ini, terus kelempar maju lagi,
+     kejebak muter-muter dan ga bisa keluar.
+
+     meta refresh di bawah cuma cadangan buat browser yang JS-nya mati.
+     Link di <body> cadangan terakhir kalo dua-duanya gagal.
+
+     File ini sengaja polos: nol CSS, nol font, nol gambar. Makin ringan makin
+     ga kerasa lompatannya.
+
+     ============ ATURAN PENAMAAN UTM (berlaku buat SEMUA jalan pintas) ============
+     Tiga kolom, tiga pertanyaan beda. Jangan sampe ada dua kolom yang ngomong
+     hal yang sama, itu buang-buang kolom.
+
+       utm_source    dari aplikasi apa    instagram | tiktok | youtube | whatsapp
+       utm_medium    dari slot mana       bio | dm | video | story | broadcast
+       utm_campaign  lagi promoin APA     paradoxical-man-pdf | evergreen
+
+     Kolom campaign itu yang bikin sistem ini tahan lama. Pas ada produk kedua,
+     link-nya cukup ganti campaign jadi nama produk baru, sementara source sama
+     medium tetep. Jadi di GA4 bisa dibandingin "produk mana yang paling laku
+     lewat auto-DM" tanpa perlu ngerombak apa-apa.
+
+     Link bio pake campaign "evergreen" karena dia nunjuk ke homepage dan emang
+     ga lagi promoin produk tertentu. Itu jujur, bukan males.
+
+     Pola jalan pintasnya:
+       /ig  /tt  /yt      profil, PASIF     -> homepage
+       /igdm /ttdm /ytd   dorongan, AKTIF   -> langsung ke form
+
+     Kalo nambah tempat baru, ikutin pola ini. Jangan ngarang nama sendiri:
+     salah tulis satu huruf bikin datanya kepecah jadi dua baris di laporan,
+     dan itu ga bisa digabung lagi belakangan. -->
+
+<script>location.replace("/?utm_source=tiktok&utm_medium=bio&utm_campaign=evergreen");</script>
+<meta http-equiv="refresh" content="0;url=/?utm_source=tiktok&amp;utm_medium=bio&amp;utm_campaign=evergreen">
+</head>
+<body>
+<p><a href="/?utm_source=tiktok&utm_medium=bio&utm_campaign=evergreen">Lanjut ke nychothesis.com</a></p>
+</body>
+</html>
