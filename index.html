@@ -21,9 +21,13 @@
 <meta name="twitter:description" content="I explain the unexplainable. Maskulinitas, feminitas, dan sisi gelap masyarakat modern.">
 <meta name="twitter:image" content="https://nychothesis.com/assets/og.png">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<!-- Font yang kepake di layar pertama diminta duluan, biar ga nunggu
+     fonts.css selesai diunduh. crossorigin WAJIB ada walaupun file-nya
+     seserver; tanpa itu font-nya malah keunduh dua kali. -->
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-900.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-700.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/atkinson-400.woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
 <!-- Dipasang di <head>, sebelum apa pun kegambar. Kalo ditaro di bawah, isinya
      sempet keliatan sekejap terus ilang lagi, dan itu keliatan kayak halaman
      rusak. Kalo JS mati, class ini ga pernah kepasang dan semuanya tampil utuh. -->
@@ -560,6 +564,19 @@
     .work.feature h3 { font-size: 1.24rem; }
   }
 </style>
+
+<!-- Google Analytics 4.
+     Sengaja ditaro di UJUNG <head>, bukan paling atas kayak saran Google.
+     Script-nya async jadi ga ngehambat apa-apa, tapi kalo ditaro duluan dia
+     rebutan jatah unduhan sama font yang dipreload di atas. Analytics telat
+     200ms ga ada ruginya; teks telat kebaca ada. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFND4PK6SC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-FFND4PK6SC');
+</script>
 </head>
 <body>
 <div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i></div>
