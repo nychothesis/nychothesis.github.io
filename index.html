@@ -333,6 +333,34 @@
     font-size: .8rem; display: block; line-height: 1.85;
   }
 
+  /* ---------- Tanya lewat WhatsApp ----------
+     Warnanya ngikut emas brand, BUKAN hijau WhatsApp. Hijau di palet
+     gelap-emas ini keliatan kayak potongan situs lain yang nyasar ke sini.
+
+     Teks pembuka chat-nya beda per halaman (lihat ?text= di link), jadi pas
+     chat masuk langsung ketauan orangnya dateng dari mana tanpa perlu nanya.
+     Yang dari homepage beda sama yang dari sales page. */
+  .wa-ask {
+    display: inline-flex; align-items: center; gap: 13px;
+    margin: 0 auto 22px; padding: 14px 20px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: rgba(255,255,255,.02);
+    text-decoration: none; color: inherit; text-align: left;
+    transition: border-color .18s, background .18s;
+  }
+  .wa-ask:hover { border-color: rgba(201,162,39,.42); background: rgba(201,162,39,.05); }
+  .wa-ask svg { width: 21px; height: 21px; flex: none; color: var(--gold); }
+  .wa-ask .wa-txt { display: flex; flex-direction: column; gap: 2px; }
+  .wa-ask .wa-hi {
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: .9rem;
+    color: var(--gold-soft);
+  }
+  .wa-ask .wa-sub { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+  @media (max-width: 520px) {
+    .wa-ask { padding: 13px 16px; gap: 11px; }
+    .wa-ask .wa-hi { font-size: .85rem; }
+  }
+
   /* ---- Tablet (dan PC sempit): hero jadi satu kolom, kartu TETEP dua kolom.
      Kalo kartunya ikut jadi satu kolom di sini, layar 768px kebuang separo. --- */
   @media (max-width: 860px) {
@@ -602,7 +630,7 @@
           <path d="M14 3c.4 2.4 2 4 4.4 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <a href="https://youtube.com/@NicholasKristianus" target="_blank" rel="noopener" aria-label="YouTube">
+      <a href="https://youtube.com/@nichokp" target="_blank" rel="noopener" aria-label="YouTube">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/>
           <path d="M10.5 9.5v5l4.2-2.5-4.2-2.5Z" fill="currentColor"/>
@@ -786,13 +814,23 @@
           <path d="M14 3c.4 2.4 2 4 4.4 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <a href="https://youtube.com/@NicholasKristianus" target="_blank" rel="noopener" aria-label="YouTube">
+      <a href="https://youtube.com/@nichokp" target="_blank" rel="noopener" aria-label="YouTube">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.6"/>
           <path d="M10.5 9.5v5l4.2-2.5-4.2-2.5Z" fill="currentColor"/>
         </svg>
       </a>
     </div>
+    <a class="wa-ask" href="https://wa.me/6285121328200?text=Halo%20Nicho%2C%20gw%20mau%20nanya" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5l1.4-4.5A8.4 8.4 0 1 1 20.5 11.7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M9.2 9.1c.3-.6.6-.6.9-.6h.5c.2 0 .4 0 .6.5l.6 1.4c0 .2 0 .4-.2.6l-.3.4c-.2.2-.3.3 0 .6.2.5.7 1.2 1.4 1.7.7.5 1.2.6 1.4.7.2 0 .3 0 .5-.2l.4-.5c.2-.3.4-.2.6-.2l1.3.7c.2.1.4.2.4.4 0 .2 0 .8-.4 1.3-.3.4-1 .8-1.5.8-1 0-2.6-.5-4.2-1.9-1.5-1.4-2.3-3-2.5-3.6-.2-.6-.2-1.4.5-2.1Z" fill="currentColor"/>
+      </svg>
+      <span class="wa-txt">
+        <span class="wa-hi">Mau nanya sesuatu?</span>
+        <span class="wa-sub">Chat gw langsung di WhatsApp.</span>
+      </span>
+    </a>
     <small>
       Nychothesis &middot; Nicholas Kristianus<br>
       &copy; <span id="thn">2026</span> Nychothesis. Semua hak dilindungi.
