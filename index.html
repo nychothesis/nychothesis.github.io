@@ -52,7 +52,7 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Poppins', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     background: radial-gradient(1100px 620px at 78% -12%, #1c1a17 0%, var(--bg) 58%);
     color: var(--text);
     font-size: 16px;
@@ -336,7 +336,7 @@
     gap: 12px; align-items: start;
   }
   .tiers .lv {
-    font-family: 'Poppins', sans-serif; font-size: .62rem; font-weight: 700;
+    font-family: 'Inter', sans-serif; font-size: .62rem; font-weight: 700;
     letter-spacing: 1.2px; text-transform: uppercase; text-align: center;
     padding: 4px 0; border-radius: 5px; border: 1px solid; line-height: 1.5;
   }
@@ -376,7 +376,7 @@
   .wa-ask svg { width: 21px; height: 21px; flex: none; color: var(--gold); }
   .wa-ask .wa-txt { display: flex; flex-direction: column; gap: 2px; }
   .wa-ask .wa-hi {
-    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: .9rem;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: .9rem;
     color: var(--gold-soft);
   }
   .wa-ask .wa-sub { font-size: .78rem; color: var(--muted); line-height: 1.5; }
@@ -630,14 +630,14 @@
     .bukti-in { grid-template-columns: 226px 1fr; gap: 34px; align-items: start; }
   }
   .bukti .klaim {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 800;
     line-height: 1.32; color: var(--text); margin-bottom: 6px;
   }
-  /* Poppins itu buat judul, tombol, dan label. Badan teks pake Inter.
-     Daftar tingkatan ini aslinya duduk di dalem .rigor dd yang udah di-set
-     Inter; begitu dipindah ke kartu ini dia keluar dari situ dan balik ke
-     Poppins bawaan body. Makanya di-set ulang di sini. */
+  /* 2026-08-19: eksperimen, judul/tombol/label sementara ikut Inter juga
+     (body default-nya diganti dari Poppins ke Inter di baris ~55), jadi
+     baris ini sekarang redundan (cuma negasin default yang udah Inter),
+     dibiarin apa adanya biar gampang di-revert kalau eksperimennya gagal. */
   .bukti .tanya, .bukti .tutup, .tiers li {
     font-family: 'Inter', sans-serif;
   }
@@ -684,7 +684,7 @@
      pertanyaan panjang kelipet di HP, sambungannya kebaca kayak pertanyaan
      baru. */
   .qs {
-    font-family: 'Poppins', sans-serif; font-size: .93rem; font-weight: 700;
+    font-family: 'Inter', sans-serif; font-size: .93rem; font-weight: 700;
     line-height: 1.5; color: var(--muted); margin-bottom: 20px;
   }
   .qs span { display: block; }
