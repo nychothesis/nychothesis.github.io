@@ -14,9 +14,13 @@
    Devanagari yang ga bakal kepake buat bahasa Indonesia.
 
    Weight-nya SENGAJA cuma yang dipake sekarang (Poppins 400/500/600/700/900,
-   Inter 400/700). Dulu badan teksnya Atkinson Hyperlegible, diganti Inter
-   2026-08-17 (Nicho lebih suka tampilannya). Kalo nambah weight baru di CSS,
-   file-nya harus diunduh dan didaftarin di sini juga.
+   Inter 400/700/900). Dulu badan teksnya Atkinson Hyperlegible, diganti
+   Inter 2026-08-17 (Nicho lebih suka tampilannya). Inter 900 nyusul
+   2026-08-19 pas judul/tombol/label juga dipindah dari Poppins ke Inter,
+   soalnya .hero h1 minta weight 900 dan tanpa file ini dia jatuh ke 700
+   (Bold), keliatan kurus dibanding Poppins Black yang lama. Kalo nambah
+   weight baru lagi di CSS, file-nya harus diunduh dan didaftarin di sini
+   juga.
 
    Lisensi: Poppins sama Inter dua-duanya Open Font License, jadi naro
    file-nya di server sendiri emang diizinin.
@@ -84,5 +88,13 @@
   font-weight: 700;
   font-display: swap;
   src: url('fonts/inter-700.woff2') format('woff2');
+  size-adjust: 90%;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('fonts/inter-900.woff2') format('woff2');
   size-adjust: 90%;
 }
