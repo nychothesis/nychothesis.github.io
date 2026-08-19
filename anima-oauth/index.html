@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Anima OAuth</title>
+
+<!-- ============ UTILITY PAGE, BUKAN KONTEN BRAND ============
+     Redirect target buat OAuth flow Anima (dashboard internal, lihat
+     ~/Documents/Vibe Code/anima). TikTok (dan platform lain yang nanti
+     nyusul) nolak `localhost` sebagai redirect URI, padahal Anima ga
+     punya server publik. Halaman ini jembatannya: TikTok ngelempar balik
+     `?code=...` ke sini, halamannya nampilin kodenya di layar, Nicho
+     copy-paste manual ke script Anima.
+
+     Sengaja noindex + ga ditaut dari manapun di situs. Nol CSS/font
+     brand karena ini bukan halaman yang dilihat audiens.
+============ -->
+</head>
+<body style="font-family:monospace; background:#111; color:#eee; padding:40px; line-height:1.6;">
+  <h1>Anima OAuth callback</h1>
+  <p>Copy kode di bawah, paste balik ke Claude Code.</p>
+  <div id="code-box" style="background:#222; padding:16px; border-radius:8px; word-break:break-all; font-size:1.1em; user-select:all;"></div>
+  <p id="state-line" style="color:#888; font-size:.85em;"></p>
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get('code');
+    var state = params.get('state');
+    var error = params.get('error');
+    var box = document.getElementById('code-box');
+    if (error) {
+      box.textContent = 'Error: ' + error + ' — ' + (params.get('error_description') || '');
+      box.style.color = '#f88';
+    } else if (code) {
+      box.textContent = code;
+    } else {
+      box.textContent = '(no code found in URL)';
+      box.style.color = '#f88';
+    }
+    if (state) {
+      document.getElementById('state-line').textContent = 'state: ' + state;
+    }
+  </script>
+</body>
+</html>
